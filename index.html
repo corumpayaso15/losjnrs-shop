@@ -2,726 +2,965 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport"
       content="width=device-width,
       initial-scale=1.0,
+      maximum-scale=1.0,
       viewport-fit=cover">
-
 <title>Givenchy Farms</title>
-
 <style>
-
-/* =========================
-   GENERAL
-========================= */
-
+/* =====================================================
+   RESET
+===================================================== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
 html,
 body {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   background: #000;
-  overflow-x: hidden;
+  overflow: hidden;
 }
-
 body {
-  color: white;
+  color: #fff;
   font-family: Arial, Helvetica, sans-serif;
 }
-
-
-/* =========================
-   PANTALLA ENTER
-========================= */
-
+/* =====================================================
+   INTRO
+===================================================== */
 .intro {
   position: fixed;
   inset: 0;
-
-  z-index: 9999;
-
-  background: #000;
-
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
-
+  background: #000;
   overflow: hidden;
-
   transition:
-    opacity .8s ease,
-    visibility .8s ease;
+    opacity .75s ease,
+    visibility .75s ease;
 }
-
 .intro.hidden {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
-
+/* VIDEO DE ENTRADA */
 .intro-video {
   position: absolute;
   inset: 0;
-
   width: 100%;
   height: 100%;
-
   object-fit: cover;
-
   background: #000;
+  filter:
+    brightness(.55)
+    contrast(1.2);
 }
-
+/* OSCURECER INTRO */
 .intro::after {
   content: "";
-
   position: absolute;
   inset: 0;
-
   background:
-    linear-gradient(
-      rgba(0,0,0,.15),
-      rgba(0,0,0,.55)
+    radial-gradient(
+      circle,
+      transparent 12%,
+      rgba(0,0,0,.3) 55%,
+      rgba(0,0,0,.85) 100%
     );
+  pointer-events: none;
 }
-
-
-/* ENTER */
-
+/* =====================================================
+   ENTER
+===================================================== */
 .enter {
   position: relative;
   z-index: 10;
-
-  border: none;
+  border: 0;
   background: transparent;
-
   color: #fff;
-
-  font-size: 30px;
-  font-weight: 800;
-
+  font-size:
+    clamp(25px, 7vw, 38px);
+  font-weight: 900;
   letter-spacing: 8px;
-
-  text-transform: uppercase;
-
   padding: 20px 30px;
-
   cursor: pointer;
-
   text-shadow:
-    0 0 10px rgba(255,255,255,.5),
-    0 0 30px rgba(255,255,255,.2);
-
-  animation: enterPulse 2s infinite;
+    0 0 10px rgba(255,255,255,.7),
+    0 0 25px rgba(255,255,255,.3);
+  animation:
+    enterPulse
+    1.8s
+    ease-in-out
+    infinite;
 }
-
+.enter::after {
+  content: "";
+  display: block;
+  width: 60%;
+  height: 1px;
+  margin: 8px auto 0;
+  background:
+    rgba(255,255,255,.85);
+}
 @keyframes enterPulse {
-
   0%,100% {
-    opacity: .75;
-    transform: scale(1);
+    opacity: .65;
+    transform:
+      scale(1);
   }
-
   50% {
     opacity: 1;
-    transform: scale(1.05);
+    transform:
+      scale(1.07);
   }
-
 }
-
-
-/* =========================
+/* =====================================================
    VIDEO PRINCIPAL
-========================= */
-
+===================================================== */
 .main-video {
   position: fixed;
   inset: 0;
-
   width: 100%;
   height: 100%;
-
   object-fit: cover;
-
   z-index: 0;
-
   background: #000;
-
-  opacity: .18;
-
+  opacity: .16;
   filter:
-    contrast(1.25)
-    brightness(.45);
+    brightness(.42)
+    contrast(1.3);
 }
-
-
-/* =========================
-   CAPA OSCURA
-========================= */
-
+/* CAPA NEGRA */
 .dark-layer {
   position: fixed;
   inset: 0;
-
   z-index: 1;
-
   pointer-events: none;
-
   background:
     radial-gradient(
       circle at center,
-      transparent 10%,
-      rgba(0,0,0,.58) 70%,
+      transparent 4%,
+      rgba(0,0,0,.5) 55%,
       #000 100%
     );
 }
-
-
-/* =========================
-   LOGOS FLOTANTES
-========================= */
-
+/* =====================================================
+   ELEMENTOS FLOTANTES
+===================================================== */
 .floating-container {
   position: fixed;
   inset: 0;
-
-  z-index: 2;
-
+  z-index: 3;
   pointer-events: none;
-
   overflow: hidden;
 }
-
 .floating {
   position: absolute;
-
-  width: 105px;
+  width: 75px;
   height: auto;
-
   opacity: 0;
-
+  will-change:
+    transform,
+    opacity;
   animation:
-    floatAround 7s linear infinite,
-    flicker 1.8s steps(2) infinite;
+    floatingMove
+    5.5s
+    linear
+    infinite,
+    floatingFlicker
+    1.5s
+    steps(2)
+    infinite;
 }
-
+/* POSICIONES */
 .floating:nth-child(1) {
   left: 3%;
-  top: 12%;
+  top: 7%;
+  animation-delay: 0s;
 }
-
 .floating:nth-child(2) {
-  right: 3%;
-  top: 22%;
-
-  animation-delay: 1.3s;
-  transform: scale(.72);
+  right: 4%;
+  top: 15%;
+  animation-delay: 1s;
 }
-
 .floating:nth-child(3) {
-  left: 5%;
-  bottom: 20%;
-
-  animation-delay: 2.4s;
-  transform: scale(.58);
+  left: 3%;
+  top: 45%;
+  animation-delay: 2s;
 }
-
 .floating:nth-child(4) {
+  right: 4%;
+  top: 48%;
+  animation-delay: 2.8s;
+}
+.floating:nth-child(5) {
+  left: 5%;
+  bottom: 10%;
+  animation-delay: 3.7s;
+}
+.floating:nth-child(6) {
   right: 5%;
   bottom: 12%;
-
-  animation-delay: 3.1s;
-  transform: scale(.8);
+  animation-delay: 4.5s;
 }
-
-.floating:nth-child(5) {
-  left: 40%;
-  top: 8%;
-
-  animation-delay: 4s;
-  transform: scale(.52);
+/* =====================================================
+   GIVENCHY FLOTANTE
+===================================================== */
+.givenchy-floating {
+  position: absolute;
+  width: 55px;
+  height: auto;
+  opacity: 0;
+  will-change:
+    transform,
+    opacity;
+  animation:
+    givenchyBounce
+    5s
+    ease-in-out
+    infinite,
+    givenchyFlicker
+    1.4s
+    steps(2)
+    infinite;
 }
-
-.floating:nth-child(6) {
-  left: 38%;
+.givenchy-floating:nth-child(7) {
+  left: 17%;
+  top: 7%;
+  animation-delay: .7s;
+}
+.givenchy-floating:nth-child(8) {
+  right: 17%;
+  top: 25%;
+  animation-delay: 1.8s;
+}
+.givenchy-floating:nth-child(9) {
+  left: 14%;
+  bottom: 18%;
+  animation-delay: 3s;
+}
+.givenchy-floating:nth-child(10) {
+  right: 14%;
   bottom: 8%;
-
-  animation-delay: 5.2s;
-  transform: scale(.5);
+  animation-delay: 4s;
 }
-
-@keyframes floatAround {
-
+/* =====================================================
+   ANIMACIONES FLOTANTES
+===================================================== */
+@keyframes floatingMove {
+  0% {
+    opacity: 0;
+    transform:
+      translate(0,0)
+      rotate(-10deg)
+      scale(.5);
+  }
+  15% {
+    opacity: .3;
+  }
+  35% {
+    transform:
+      translate(25px,30px)
+      rotate(8deg)
+      scale(.7);
+  }
+  55% {
+    opacity: .12;
+    transform:
+      translate(-20px,65px)
+      rotate(-7deg)
+      scale(.6);
+  }
+  70% {
+    opacity: .4;
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(25px,115px)
+      rotate(12deg)
+      scale(.45);
+  }
+}
+@keyframes floatingFlicker {
+  0%,100% {
+    filter:
+      brightness(1);
+  }
+  45% {
+    filter:
+      brightness(.45);
+  }
+  48% {
+    filter:
+      brightness(1.8);
+  }
+  52% {
+    filter:
+      brightness(.55);
+  }
+}
+@keyframes givenchyBounce {
   0% {
     opacity: 0;
     transform:
       translate(0,0)
       rotate(-8deg)
-      scale(.6);
+      scale(.4);
   }
-
   15% {
-    opacity: .38;
+    opacity: .35;
   }
-
-  40% {
-    opacity: .12;
-
+  30% {
     transform:
-      translate(30px,45px)
-      rotate(8deg)
-      scale(.8);
+      translate(30px,-20px)
+      rotate(10deg)
+      scale(.65);
   }
-
-  60% {
-    opacity: .4;
-
+  50% {
+    opacity: .15;
     transform:
-      translate(-25px,90px)
-      rotate(-5deg)
-      scale(.7);
-  }
-
-  80% {
-    opacity: .08;
-  }
-
-  100% {
-    opacity: 0;
-
-    transform:
-      translate(40px,150px)
-      rotate(12deg)
+      translate(-25px,30px)
+      rotate(-7deg)
       scale(.5);
   }
+  70% {
+    opacity: .4;
+    transform:
+      translate(20px,60px)
+      rotate(8deg)
+      scale(.65);
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(-15px,110px)
+      rotate(-10deg)
+      scale(.35);
+  }
 }
-
-@keyframes flicker {
-
+@keyframes givenchyFlicker {
   0%,100% {
-    filter: brightness(1);
+    filter:
+      brightness(1)
+      contrast(1);
   }
-
-  45% {
-    filter: brightness(.4);
-  }
-
   47% {
-    filter: brightness(1.8);
+    filter:
+      brightness(.5);
   }
-
   50% {
-    filter: brightness(.5);
+    filter:
+      brightness(1.7)
+      contrast(1.4);
+  }
+  53% {
+    filter:
+      brightness(.7);
   }
 }
-
-
-/* =========================
+/* =====================================================
    CONTENIDO
-========================= */
-
+===================================================== */
 .content {
   position: relative;
-
-  z-index: 5;
-
-  min-height: 100vh;
-
-  padding:
-    25px 12px 50px;
-
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
-  justify-content: center;
-
+  justify-content: flex-start;
+  padding-top:
+    max(7px, env(safe-area-inset-top));
   opacity: 0;
-
-  transform: scale(.96);
-
+  transform:
+    scale(.96)
+    translateY(8px);
   transition:
-    opacity 1s ease,
-    transform 1s ease;
+    opacity .8s ease,
+    transform .8s ease;
 }
-
 .content.visible {
   opacity: 1;
-  transform: scale(1);
+  transform:
+    scale(1)
+    translateY(0);
 }
-
-
-/* =========================
+/* =====================================================
    LOGO PRINCIPAL
-========================= */
-
+===================================================== */
 .brand-logo {
-  width: 105px;
+  width: 58px;
   height: auto;
-
-  margin-bottom: 18px;
-
+  margin-bottom: 3px;
   object-fit: contain;
-
   filter:
-    drop-shadow(0 0 12px rgba(255,0,0,.25));
-
-  animation:
-    logoFloat 4s ease-in-out infinite;
-}
-
-@keyframes logoFloat {
-
-  0%,100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-4px);
-  }
-}
-
-
-/* =========================
-   IMAGEN PRINCIPAL
-========================= */
-
-.main-image {
-
-  position: relative;
-
-  width: min(94vw, 520px);
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  animation:
-    imageBounce 2.8s infinite;
-}
-
-.main-image img {
-
-  width: 100%;
-  height: auto;
-
-  display: block;
-
-  filter:
-    contrast(1.18)
-    brightness(.92)
     drop-shadow(
-      0 0 25px rgba(0,0,0,.95)
+      0 0 13px
+      rgba(255,0,0,.3)
     );
-
   animation:
-    imageGlitch 3.2s infinite;
+    brandDance
+    2.4s
+    ease-in-out
+    infinite;
 }
-
-
-/* =========================
-   GLITCH DE LA IMAGEN
-========================= */
-
-.main-image::before,
-.main-image::after {
-
-  content: "";
-
-  position: absolute;
-
-  inset: 0;
-
-  background-image:
-    url("https://files.catbox.moe/3ixrpv.png");
-
-  background-size: contain;
-
-  background-repeat: no-repeat;
-
-  background-position: center;
-
-  opacity: 0;
-
-  pointer-events: none;
-}
-
-.main-image::before {
-  animation: glitchOne 2.8s infinite;
-}
-
-.main-image::after {
-  animation: glitchTwo 2.8s infinite;
-}
-
-
-@keyframes imageBounce {
-
+@keyframes brandDance {
   0%,100% {
     transform:
       translateY(0)
       rotate(0deg);
   }
-
-  10% {
+  25% {
     transform:
-      translateY(-9px)
-      rotate(-1deg);
+      translateY(-5px)
+      rotate(-3deg);
   }
-
-  20% {
-    transform:
-      translateY(6px)
-      rotate(1deg);
-  }
-
-  30% {
-    transform:
-      translateY(-4px)
-      rotate(0deg);
-  }
-
   50% {
     transform:
-      translateY(0);
+      translateY(2px)
+      rotate(3deg);
+  }
+  75% {
+    transform:
+      translateY(-3px)
+      rotate(-2deg);
   }
 }
-
-
-@keyframes imageGlitch {
-
-  0%,88%,100% {
-    transform: translate(0);
+/* =====================================================
+   FOTO PRINCIPAL
+===================================================== */
+.main-image {
+  position: relative;
+  width:
+    min(88vw, 470px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation:
+    imageBounce
+    2.5s
+    ease-in-out
+    infinite;
+}
+.main-image > img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter:
+    contrast(1.2)
+    brightness(.93)
+    drop-shadow(
+      0 0 25px
+      rgba(0,0,0,.95)
+    );
+  animation:
+    imageGlitch
+    2.7s
+    infinite;
+}
+/* =====================================================
+   GLITCH
+===================================================== */
+.main-image::before,
+.main-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    url(
+      "https://files.catbox.moe/3ixrpv.png"
+    );
+  background-size:
+    contain;
+  background-repeat:
+    no-repeat;
+  background-position:
+    center;
+  opacity: 0;
+  pointer-events: none;
+}
+.main-image::before {
+  animation:
+    glitchOne
+    2.5s
+    infinite;
+}
+.main-image::after {
+  animation:
+    glitchTwo
+    2.5s
+    infinite;
+}
+@keyframes imageBounce {
+  0%,100% {
+    transform:
+      translateY(0)
+      rotate(0deg);
   }
-
-  89% {
+  25% {
+    transform:
+      translateY(-6px)
+      rotate(-1deg);
+  }
+  50% {
+    transform:
+      translateY(3px)
+      rotate(1deg);
+  }
+  75% {
+    transform:
+      translateY(-3px)
+      rotate(0deg);
+  }
+}
+@keyframes imageGlitch {
+  0%,87%,100% {
+    transform:
+      translate(0);
+  }
+  88% {
     transform:
       translate(-7px,2px);
   }
-
-  90% {
+  89% {
     transform:
       translate(8px,-2px);
   }
-
-  91% {
+  90% {
     transform:
       translate(-4px,0);
   }
-
   92% {
     transform:
       translate(0);
   }
 }
-
-
 @keyframes glitchOne {
-
-  0%,85%,100% {
+  0%,83%,100% {
     opacity: 0;
   }
-
-  86% {
+  84% {
     opacity: .55;
-
     transform:
       translate(-11px,0);
-
     clip-path:
-      inset(15% 0 60% 0);
+      inset(10% 0 65% 0);
   }
-
-  88% {
+  87% {
     opacity: 0;
   }
 }
-
-
 @keyframes glitchTwo {
-
-  0%,90%,100% {
+  0%,88%,100% {
     opacity: 0;
   }
-
-  91% {
+  89% {
     opacity: .5;
-
     transform:
-      translate(10px,0);
-
+      translate(11px,0);
     clip-path:
       inset(55% 0 20% 0);
   }
-
-  93% {
+  92% {
     opacity: 0;
   }
 }
-
-
-/* =========================
-   TEXTO
-========================= */
-
-.titulo {
-
-  margin-top: 12px;
-
-  text-align: center;
-
-  font-size: 16px;
-
-  font-weight: 800;
-
-  letter-spacing: 2px;
-
-  text-transform: uppercase;
-
-  text-shadow:
-    0 0 12px rgba(0,0,0,.95);
+/* =====================================================
+   PRE-ROLADO
+===================================================== */
+.pre-roll {
+  position: relative;
+  width:
+    min(35vw, 145px);
+  margin-top: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: .62;
+  animation:
+    prerollDance
+    2.8s
+    ease-in-out
+    infinite;
+  filter:
+    drop-shadow(
+      0 0 15px
+      rgba(0,0,0,.9)
+    );
 }
-
+.pre-roll img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  animation:
+    prerollTilt
+    2.1s
+    ease-in-out
+    infinite;
+}
+/* BRILLO */
+.pre-roll::after {
+  content: "";
+  position: absolute;
+  left: -30%;
+  top: 0;
+  width: 30%;
+  height: 100%;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.16),
+      transparent
+    );
+  transform:
+    skewX(-15deg);
+  animation:
+    productShine
+    3.5s
+    ease-in-out
+    infinite;
+}
+@keyframes prerollDance {
+  0%,100% {
+    transform:
+      translateY(0)
+      rotate(0deg)
+      scale(1);
+  }
+  20% {
+    transform:
+      translateY(-5px)
+      rotate(-2deg)
+      scale(1.02);
+  }
+  40% {
+    transform:
+      translateY(2px)
+      rotate(2deg)
+      scale(.98);
+  }
+  60% {
+    transform:
+      translateY(-4px)
+      rotate(-1deg)
+      scale(1.02);
+  }
+  80% {
+    transform:
+      translateY(1px)
+      rotate(1deg)
+      scale(1);
+  }
+}
+@keyframes prerollTilt {
+  0%,100% {
+    transform:
+      rotate(0deg);
+  }
+  50% {
+    transform:
+      rotate(-2deg);
+  }
+}
+@keyframes productShine {
+  0% {
+    left: -30%;
+    opacity: 0;
+  }
+  35% {
+    opacity: 0;
+  }
+  50% {
+    opacity: .8;
+  }
+  70% {
+    left: 120%;
+    opacity: 0;
+  }
+  100% {
+    left: 120%;
+    opacity: 0;
+  }
+}
+/* =====================================================
+   TEXTO
+===================================================== */
+.titulo {
+  margin-top: 2px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 12px #000;
+  animation:
+    titlePulse
+    2s
+    infinite;
+}
 .verde {
   color: #00a651;
 }
-
 .blanco {
   color: #fff;
 }
-
 .rojo {
   color: #d00000;
 }
-
-
-/* =========================
+@keyframes titlePulse {
+  0%,100% {
+    opacity: .8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+/* =====================================================
    REDES SOCIALES
-========================= */
-
+===================================================== */
 .socials {
-
   display: flex;
-
-  justify-content: center;
-
   align-items: center;
-
-  gap: 12px;
-
-  margin-top: 22px;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+  position: relative;
+  z-index: 20;
 }
-
 .social {
-
+  position: relative;
+  width: 105px;
+  height: 30px;
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
-  width: 46px;
-  height: 46px;
-
-  border: 1px solid rgba(255,255,255,.25);
-
-  border-radius: 50%;
-
-  background: rgba(0,0,0,.55);
-
+  border-radius: 8px;
   color: #fff;
-
   text-decoration: none;
-
-  font-size: 12px;
-
-  font-weight: 700;
-
-  letter-spacing: .5px;
-
-  backdrop-filter: blur(5px);
-
-  transition:
-    transform .25s ease,
-    border-color .25s ease,
-    background .25s ease;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  background:
+    rgba(0,0,0,.78);
+  backdrop-filter:
+    blur(7px);
+  box-shadow:
+    0 0 12px
+    rgba(0,0,0,.8);
+  overflow: hidden;
+  animation:
+    socialDance
+    1.8s
+    ease-in-out
+    infinite;
 }
-
+.social:nth-child(2) {
+  animation-delay:
+    .35s;
+}
+/* INSTAGRAM */
+.instagram {
+  border:
+    1px solid
+    rgba(255,60,140,.8);
+  text-shadow:
+    0 0 8px
+    rgba(255,60,140,.7);
+}
+/* TIKTOK */
+.tiktok {
+  border:
+    1px solid
+    rgba(0,220,255,.8);
+  text-shadow:
+    0 0 8px
+    rgba(0,220,255,.7);
+}
+/* LÍNEA ANIMADA */
+.social::before {
+  content: "";
+  position: absolute;
+  left: -100%;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  animation:
+    socialLine
+    2s
+    linear
+    infinite;
+}
+.instagram::before {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #ff4f91,
+      transparent
+    );
+}
+.tiktok::before {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #00dcff,
+      transparent
+    );
+}
+/* BAILE */
+@keyframes socialDance {
+  0%,100% {
+    transform:
+      translateY(0)
+      rotate(0deg)
+      scale(1);
+  }
+  20% {
+    transform:
+      translateY(-5px)
+      rotate(-4deg)
+      scale(1.04);
+  }
+  40% {
+    transform:
+      translateY(2px)
+      rotate(4deg)
+      scale(.98);
+  }
+  60% {
+    transform:
+      translateY(-4px)
+      rotate(-3deg)
+      scale(1.03);
+  }
+  80% {
+    transform:
+      translateY(1px)
+      rotate(2deg)
+      scale(1);
+  }
+}
+@keyframes socialLine {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
 .social:active {
-
-  transform: scale(.9);
-
+  transform:
+    scale(.88)
+    rotate(-5deg);
 }
-
-.social.instagram {
-  border-color: rgba(255,80,120,.45);
-}
-
-.social.tiktok {
-  border-color: rgba(0,220,255,.45);
-}
-
-
-/* =========================
-   MÓVIL
-========================= */
-
+/* =====================================================
+   TELÉFONOS
+===================================================== */
 @media (max-width:430px) {
-
-  .enter {
-    font-size: 26px;
-    letter-spacing: 6px;
-  }
-
   .content {
-    padding-top: 22px;
+    padding-top:
+      max(
+        7px,
+        env(safe-area-inset-top)
+      );
   }
-
   .brand-logo {
-    width: 90px;
-    margin-bottom: 15px;
+    width: 58px;
+    margin-bottom: 3px;
   }
-
   .main-image {
-    width: 94vw;
+    width: 88vw;
   }
-
-  .floating {
-    width: 82px;
+  .pre-roll {
+    width: 35vw;
+    max-width: 145px;
+    margin-top: 2px;
   }
-
   .titulo {
-    font-size: 15px;
+    font-size: 13px;
+    margin-top: 2px;
     letter-spacing: 1.5px;
   }
+  .socials {
+    margin-top: 4px;
+    gap: 9px;
+  }
+  .social {
+    width: 100px;
+    height: 29px;
+    font-size: 8px;
+  }
+  .floating {
+    width: 58px;
+  }
+  .givenchy-floating {
+    width: 46px;
+  }
 }
-
+/* =====================================================
+   PANTALLAS BAJAS
+===================================================== */
+@media (max-height:700px) {
+  .brand-logo {
+    width: 48px;
+  }
+  .main-image {
+    width: 82vw;
+  }
+  .pre-roll {
+    width: 28vw;
+    max-width: 115px;
+  }
+  .titulo {
+    font-size: 12px;
+  }
+  .socials {
+    margin-top: 3px;
+  }
+  .social {
+    height: 27px;
+  }
+}
+/* =====================================================
+   REDUCE MOTION
+===================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      .001ms !important;
+    animation-iteration-count:
+      1 !important;
+  }
+}
 </style>
 </head>
-
-
 <body>
-
-
-<!-- =========================
+<!-- =====================================================
      INTRO
-========================= -->
-
+===================================================== -->
 <section
   class="intro"
   id="intro">
-
   <video
     class="intro-video"
+    id="introVideo"
     src="https://files.catbox.moe/l8qahy.mov"
     autoplay
     muted
@@ -730,245 +969,197 @@ body {
     webkit-playsinline
     preload="auto">
   </video>
-
   <button
     class="enter"
     id="enter"
     type="button">
-
     ENTER
-
   </button>
-
 </section>
-
-
-
-<!-- =========================
+<!-- =====================================================
      VIDEO PRINCIPAL
-========================= -->
-
+===================================================== -->
 <video
   class="main-video"
   id="mainVideo"
   src="https://files.catbox.moe/l8qahy.mov"
-  autoplay
   muted
   loop
   playsinline
   webkit-playsinline
   preload="auto">
 </video>
-
-
 <div class="dark-layer"></div>
-
-
-
-<!-- =========================
-     LOGOS FLOTANTES
-========================= -->
-
+<!-- =====================================================
+     FLOTANTES
+===================================================== -->
 <div class="floating-container">
-
+  <!-- GRÁFICOS -->
   <img
     class="floating"
     src="https://files.catbox.moe/qgbk6c.png">
-
   <img
     class="floating"
     src="https://files.catbox.moe/qgbk6c.png">
-
   <img
     class="floating"
     src="https://files.catbox.moe/qgbk6c.png">
-
   <img
     class="floating"
     src="https://files.catbox.moe/qgbk6c.png">
-
   <img
     class="floating"
     src="https://files.catbox.moe/qgbk6c.png">
-
   <img
     class="floating"
     src="https://files.catbox.moe/qgbk6c.png">
-
+  <!-- GIVENCHY -->
+  <img
+    class="givenchy-floating"
+    src="https://files.catbox.moe/1k4n1o.png">
+  <img
+    class="givenchy-floating"
+    src="https://files.catbox.moe/1k4n1o.png">
+  <img
+    class="givenchy-floating"
+    src="https://files.catbox.moe/1k4n1o.png">
+  <img
+    class="givenchy-floating"
+    src="https://files.catbox.moe/1k4n1o.png">
 </div>
-
-
-
-<!-- =========================
+<!-- =====================================================
      CONTENIDO
-========================= -->
-
+===================================================== -->
 <main
   class="content"
   id="content">
-
-
   <!-- LOGO -->
-
   <img
     class="brand-logo"
     src="https://files.catbox.moe/1k4n1o.png"
     alt="Givenchy Farms">
-
-
-  <!-- IMAGEN PRINCIPAL -->
-
+  <!-- FOTO PRINCIPAL -->
   <div class="main-image">
-
     <img
       src="https://files.catbox.moe/3ixrpv.png"
       alt="Imagen principal">
-
   </div>
-
-
+  <!-- PRE-ROLADO -->
+  <div class="pre-roll">
+    <img
+      src="https://files.catbox.moe/eufb5x.png"
+      alt="Producto pre-rolado">
+  </div>
   <!-- TEXTO -->
-
   <div class="titulo">
-
-    <span class="verde"> ARRIBA </span>
-
-    <span class="blanco"> PAPÁ </span>
-
-    <span class="rojo">  MENCHO </span>
-
+    <span class="verde">
+      GIVENCHY
+    </span>
+    <span class="blanco">
+      FARMS
+    </span>
   </div>
-
-
   <!-- REDES -->
-
   <div class="socials">
-
     <a
       class="social instagram"
       href="https://www.instagram.com/givenchyfarms/"
       target="_blank"
-      rel="noopener">
-      IG
+      rel="noopener noreferrer">
+      📸 INSTAGRAM
     </a>
-
     <a
       class="social tiktok"
       href="https://www.tiktok.com/@givenchyfarms"
       target="_blank"
-      rel="noopener">
-      TT
+      rel="noopener noreferrer">
+      ♪ TIKTOK
     </a>
-
   </div>
-
-
 </main>
-
-
-
-<!-- =========================
+<!-- =====================================================
      MÚSICA
-========================= -->
-
+===================================================== -->
 <audio
   id="music"
   src="https://files.catbox.moe/9ytgwt.mp3"
   loop
   preload="auto">
 </audio>
-
-
-
 <script>
-
+/* =====================================================
+   ELEMENTOS
+===================================================== */
 const intro =
   document.getElementById("intro");
-
 const enter =
   document.getElementById("enter");
-
 const content =
   document.getElementById("content");
-
 const music =
   document.getElementById("music");
-
+const introVideo =
+  document.getElementById("introVideo");
 const mainVideo =
   document.getElementById("mainVideo");
-
-
-enter.addEventListener("click", async () => {
-
-
-  /* =========================
-     MÚSICA
-  ========================= */
-
-  try {
-
-    await music.play();
-
-  } catch(error) {
-
-    console.log(
-      "Safari bloqueó el audio:",
-      error
-    );
-
-  }
-
-
-  /* =========================
-     VIDEO PRINCIPAL
-  ========================= */
-
-  try {
-
-    await mainVideo.play();
-
-  } catch(error) {
-
-    console.log(
-      "No se pudo iniciar el video:",
-      error
-    );
-
-  }
-
-
-  /* =========================
-     CERRAR INTRO
-  ========================= */
-
-  intro.classList.add("hidden");
-
-
-  /* =========================
-     MOSTRAR CONTENIDO
-  ========================= */
-
-  setTimeout(() => {
-
-    content.classList.add("visible");
-
-  }, 250);
-
-
-  /* =========================
-     ELIMINAR INTRO
-  ========================= */
-
-  setTimeout(() => {
-
-    intro.remove();
-
-  }, 900);
-
-});
-
+/* =====================================================
+   VIDEO INTRO
+===================================================== */
+introVideo
+  .play()
+  .catch(() => {});
+/* =====================================================
+   ENTER
+===================================================== */
+enter.addEventListener(
+  "click",
+  async () => {
+    /* ===============================
+       MÚSICA
+    =============================== */
+    try {
+      music.currentTime = 0;
+      await music.play();
+    } catch(error) {
+      console.log(
+        "Safari bloqueó el audio:",
+        error
+      );
+    }
+    /* ===============================
+       VIDEO PRINCIPAL
+    =============================== */
+    try {
+      await mainVideo.play();
+    } catch(error) {
+      console.log(
+        "No se pudo reproducir el video:",
+        error
+      );
+    }
+    /* ===============================
+       PAUSAR INTRO
+    =============================== */
+    try {
+      introVideo.pause();
+    } catch(error) {}
+    /* ===============================
+       OCULTAR INTRO
+    =============================== */
+    intro.classList.add("hidden");
+    /* ===============================
+       MOSTRAR CONTENIDO
+    =============================== */
+    setTimeout(() => {
+      content.classList.add("visible");
+    }, 150);
+    /* ===============================
+       ELIMINAR INTRO
+    =============================== */
+    setTimeout(() => {
+      intro.remove();
+    }, 850);
+  });
 </script>
-
-
 </body>
 </html>
