@@ -2,162 +2,973 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LOSJNRS SHOP</title>
+
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      viewport-fit=cover">
+
+<title>Givenchy Farms</title>
 
 <style>
 
-body{
-  margin:0;
-  background:#0f0f0f;
-  color:white;
-  font-family:sans-serif;
+/* =========================
+   GENERAL
+========================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.header{
-  text-align:center;
-  padding:40px 20px;
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  background: #000;
+  overflow-x: hidden;
 }
 
-.header h1{
-  font-size:40px;
+body {
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.products{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:20px;
-  padding:20px;
+
+/* =========================
+   PANTALLA ENTER
+========================= */
+
+.intro {
+  position: fixed;
+  inset: 0;
+
+  z-index: 9999;
+
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  transition:
+    opacity .8s ease,
+    visibility .8s ease;
 }
 
-.card{
-  width:300px;
-  background:#1b1b1b;
-  border-radius:25px;
-  overflow:hidden;
-  text-align:center;
-  padding-bottom:20px;
+.intro.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.card img{
-  width:100%;
+.intro-video {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  background: #000;
 }
 
-.card h2{
-  margin-top:15px;
+.intro::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      rgba(0,0,0,.15),
+      rgba(0,0,0,.55)
+    );
 }
 
-.card p{
-  color:#00ff99;
-  font-size:20px;
+
+/* ENTER */
+
+.enter {
+  position: relative;
+  z-index: 10;
+
+  border: none;
+  background: transparent;
+
+  color: #fff;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  letter-spacing: 8px;
+
+  text-transform: uppercase;
+
+  padding: 20px 30px;
+
+  cursor: pointer;
+
+  text-shadow:
+    0 0 10px rgba(255,255,255,.5),
+    0 0 30px rgba(255,255,255,.2);
+
+  animation: enterPulse 2s infinite;
 }
 
-button{
-  border:none;
-  padding:15px 30px;
-  border-radius:15px;
-  background:#00ff99;
-  color:black;
-  font-size:16px;
+@keyframes enterPulse {
+
+  0%,100% {
+    opacity: .75;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
 }
 
-.popup{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,.8);
-  display:none;
-  justify-content:center;
-  align-items:center;
+
+/* =========================
+   VIDEO PRINCIPAL
+========================= */
+
+.main-video {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  z-index: 0;
+
+  background: #000;
+
+  opacity: .18;
+
+  filter:
+    contrast(1.25)
+    brightness(.45);
 }
 
-.popup-box{
-  background:#1b1b1b;
-  padding:30px;
-  border-radius:20px;
-  text-align:center;
-  width:300px;
+
+/* =========================
+   CAPA OSCURA
+========================= */
+
+.dark-layer {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 10%,
+      rgba(0,0,0,.58) 70%,
+      #000 100%
+    );
+}
+
+
+/* =========================
+   LOGOS FLOTANTES
+========================= */
+
+.floating-container {
+  position: fixed;
+  inset: 0;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  overflow: hidden;
+}
+
+.floating {
+  position: absolute;
+
+  width: 105px;
+  height: auto;
+
+  opacity: 0;
+
+  animation:
+    floatAround 7s linear infinite,
+    flicker 1.8s steps(2) infinite;
+}
+
+.floating:nth-child(1) {
+  left: 3%;
+  top: 12%;
+}
+
+.floating:nth-child(2) {
+  right: 3%;
+  top: 22%;
+
+  animation-delay: 1.3s;
+  transform: scale(.72);
+}
+
+.floating:nth-child(3) {
+  left: 5%;
+  bottom: 20%;
+
+  animation-delay: 2.4s;
+  transform: scale(.58);
+}
+
+.floating:nth-child(4) {
+  right: 5%;
+  bottom: 12%;
+
+  animation-delay: 3.1s;
+  transform: scale(.8);
+}
+
+.floating:nth-child(5) {
+  left: 40%;
+  top: 8%;
+
+  animation-delay: 4s;
+  transform: scale(.52);
+}
+
+.floating:nth-child(6) {
+  left: 38%;
+  bottom: 8%;
+
+  animation-delay: 5.2s;
+  transform: scale(.5);
+}
+
+@keyframes floatAround {
+
+  0% {
+    opacity: 0;
+    transform:
+      translate(0,0)
+      rotate(-8deg)
+      scale(.6);
+  }
+
+  15% {
+    opacity: .38;
+  }
+
+  40% {
+    opacity: .12;
+
+    transform:
+      translate(30px,45px)
+      rotate(8deg)
+      scale(.8);
+  }
+
+  60% {
+    opacity: .4;
+
+    transform:
+      translate(-25px,90px)
+      rotate(-5deg)
+      scale(.7);
+  }
+
+  80% {
+    opacity: .08;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(40px,150px)
+      rotate(12deg)
+      scale(.5);
+  }
+}
+
+@keyframes flicker {
+
+  0%,100% {
+    filter: brightness(1);
+  }
+
+  45% {
+    filter: brightness(.4);
+  }
+
+  47% {
+    filter: brightness(1.8);
+  }
+
+  50% {
+    filter: brightness(.5);
+  }
+}
+
+
+/* =========================
+   CONTENIDO
+========================= */
+
+.content {
+  position: relative;
+
+  z-index: 5;
+
+  min-height: 100vh;
+
+  padding:
+    25px 12px 50px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  opacity: 0;
+
+  transform: scale(.96);
+
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+}
+
+.content.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+/* =========================
+   LOGO PRINCIPAL
+========================= */
+
+.brand-logo {
+  width: 105px;
+  height: auto;
+
+  margin-bottom: 18px;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 0 12px rgba(255,0,0,.25));
+
+  animation:
+    logoFloat 4s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+
+/* =========================
+   IMAGEN PRINCIPAL
+========================= */
+
+.main-image {
+
+  position: relative;
+
+  width: min(94vw, 520px);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  animation:
+    imageBounce 2.8s infinite;
+}
+
+.main-image img {
+
+  width: 100%;
+  height: auto;
+
+  display: block;
+
+  filter:
+    contrast(1.18)
+    brightness(.92)
+    drop-shadow(
+      0 0 25px rgba(0,0,0,.95)
+    );
+
+  animation:
+    imageGlitch 3.2s infinite;
+}
+
+
+/* =========================
+   GLITCH DE LA IMAGEN
+========================= */
+
+.main-image::before,
+.main-image::after {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background-image:
+    url("https://files.catbox.moe/3ixrpv.png");
+
+  background-size: contain;
+
+  background-repeat: no-repeat;
+
+  background-position: center;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+.main-image::before {
+  animation: glitchOne 2.8s infinite;
+}
+
+.main-image::after {
+  animation: glitchTwo 2.8s infinite;
+}
+
+
+@keyframes imageBounce {
+
+  0%,100% {
+    transform:
+      translateY(0)
+      rotate(0deg);
+  }
+
+  10% {
+    transform:
+      translateY(-9px)
+      rotate(-1deg);
+  }
+
+  20% {
+    transform:
+      translateY(6px)
+      rotate(1deg);
+  }
+
+  30% {
+    transform:
+      translateY(-4px)
+      rotate(0deg);
+  }
+
+  50% {
+    transform:
+      translateY(0);
+  }
+}
+
+
+@keyframes imageGlitch {
+
+  0%,88%,100% {
+    transform: translate(0);
+  }
+
+  89% {
+    transform:
+      translate(-7px,2px);
+  }
+
+  90% {
+    transform:
+      translate(8px,-2px);
+  }
+
+  91% {
+    transform:
+      translate(-4px,0);
+  }
+
+  92% {
+    transform:
+      translate(0);
+  }
+}
+
+
+@keyframes glitchOne {
+
+  0%,85%,100% {
+    opacity: 0;
+  }
+
+  86% {
+    opacity: .55;
+
+    transform:
+      translate(-11px,0);
+
+    clip-path:
+      inset(15% 0 60% 0);
+  }
+
+  88% {
+    opacity: 0;
+  }
+}
+
+
+@keyframes glitchTwo {
+
+  0%,90%,100% {
+    opacity: 0;
+  }
+
+  91% {
+    opacity: .5;
+
+    transform:
+      translate(10px,0);
+
+    clip-path:
+      inset(55% 0 20% 0);
+  }
+
+  93% {
+    opacity: 0;
+  }
+}
+
+
+/* =========================
+   TEXTO
+========================= */
+
+.titulo {
+
+  margin-top: 12px;
+
+  text-align: center;
+
+  font-size: 16px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  text-shadow:
+    0 0 12px rgba(0,0,0,.95);
+}
+
+.verde {
+  color: #00a651;
+}
+
+.blanco {
+  color: #fff;
+}
+
+.rojo {
+  color: #d00000;
+}
+
+
+/* =========================
+   REDES SOCIALES
+========================= */
+
+.socials {
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 22px;
+}
+
+.social {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+
+  border: 1px solid rgba(255,255,255,.25);
+
+  border-radius: 50%;
+
+  background: rgba(0,0,0,.55);
+
+  color: #fff;
+
+  text-decoration: none;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: .5px;
+
+  backdrop-filter: blur(5px);
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+}
+
+.social:active {
+
+  transform: scale(.9);
+
+}
+
+.social.instagram {
+  border-color: rgba(255,80,120,.45);
+}
+
+.social.tiktok {
+  border-color: rgba(0,220,255,.45);
+}
+
+
+/* =========================
+   MÓVIL
+========================= */
+
+@media (max-width:430px) {
+
+  .enter {
+    font-size: 26px;
+    letter-spacing: 6px;
+  }
+
+  .content {
+    padding-top: 22px;
+  }
+
+  .brand-logo {
+    width: 90px;
+    margin-bottom: 15px;
+  }
+
+  .main-image {
+    width: 94vw;
+  }
+
+  .floating {
+    width: 82px;
+  }
+
+  .titulo {
+    font-size: 15px;
+    letter-spacing: 1.5px;
+  }
 }
 
 </style>
-
 </head>
+
+
 <body>
 
-<div class="header">
-  <h1>LOSJNRS SHOP</h1>
-  <p>Compra rápida y segura</p>
+
+<!-- =========================
+     INTRO
+========================= -->
+
+<section
+  class="intro"
+  id="intro">
+
+  <video
+    class="intro-video"
+    src="https://files.catbox.moe/l8qahy.mov"
+    autoplay
+    muted
+    loop
+    playsinline
+    webkit-playsinline
+    preload="auto">
+  </video>
+
+  <button
+    class="enter"
+    id="enter"
+    type="button">
+
+    ENTER
+
+  </button>
+
+</section>
+
+
+
+<!-- =========================
+     VIDEO PRINCIPAL
+========================= -->
+
+<video
+  class="main-video"
+  id="mainVideo"
+  src="https://files.catbox.moe/l8qahy.mov"
+  autoplay
+  muted
+  loop
+  playsinline
+  webkit-playsinline
+  preload="auto">
+</video>
+
+
+<div class="dark-layer"></div>
+
+
+
+<!-- =========================
+     LOGOS FLOTANTES
+========================= -->
+
+<div class="floating-container">
+
+  <img
+    class="floating"
+    src="https://files.catbox.moe/qgbk6c.png">
+
+  <img
+    class="floating"
+    src="https://files.catbox.moe/qgbk6c.png">
+
+  <img
+    class="floating"
+    src="https://files.catbox.moe/qgbk6c.png">
+
+  <img
+    class="floating"
+    src="https://files.catbox.moe/qgbk6c.png">
+
+  <img
+    class="floating"
+    src="https://files.catbox.moe/qgbk6c.png">
+
+  <img
+    class="floating"
+    src="https://files.catbox.moe/qgbk6c.png">
+
 </div>
 
-<div class="products">
 
-<div class="card">
-<img src="https://i.imgur.com/8Km9tLL.png">
 
-<h2>Wax Premium</h2>
+<!-- =========================
+     CONTENIDO
+========================= -->
 
-<p>$850 MXN</p>
+<main
+  class="content"
+  id="content">
 
-<button onclick="buyProduct('Wax Premium')">
-Comprar
-</button>
 
-</div>
+  <!-- LOGO -->
 
-</div>
+  <img
+    class="brand-logo"
+    src="https://files.catbox.moe/1k4n1o.png"
+    alt="Givenchy Farms">
 
-<div class="popup" id="popup">
 
-<div class="popup-box">
+  <!-- IMAGEN PRINCIPAL -->
 
-<h2 id="productName"></h2>
+  <div class="main-image">
 
-<p>Proceder al pago</p>
+    <img
+      src="https://files.catbox.moe/3ixrpv.png"
+      alt="Imagen principal">
 
-<a href="https://google.com">
+  </div>
 
-<button>
-Pagar ahora
-</button>
 
-</a>
+  <!-- TEXTO -->
 
-<br><br>
+  <div class="titulo">
 
-<button onclick="closePopup()">
-Cerrar
-</button>
+    <span class="verde"> ARRIBA </span>
 
-</div>
+    <span class="blanco"> PAPÁ </span>
 
-</div>
+    <span class="rojo">  MENCHO </span>
+
+  </div>
+
+
+  <!-- REDES -->
+
+  <div class="socials">
+
+    <a
+      class="social instagram"
+      href="https://www.instagram.com/givenchyfarms/"
+      target="_blank"
+      rel="noopener">
+      IG
+    </a>
+
+    <a
+      class="social tiktok"
+      href="https://www.tiktok.com/@givenchyfarms"
+      target="_blank"
+      rel="noopener">
+      TT
+    </a>
+
+  </div>
+
+
+</main>
+
+
+
+<!-- =========================
+     MÚSICA
+========================= -->
+
+<audio
+  id="music"
+  src="https://files.catbox.moe/9ytgwt.mp3"
+  loop
+  preload="auto">
+</audio>
+
+
 
 <script>
 
-function buyProduct(product){
+const intro =
+  document.getElementById("intro");
 
-document.getElementById(
-"popup"
-).style.display="flex";
+const enter =
+  document.getElementById("enter");
 
-document.getElementById(
-"productName"
-).innerText=product;
+const content =
+  document.getElementById("content");
 
-}
+const music =
+  document.getElementById("music");
 
-function closePopup(){
+const mainVideo =
+  document.getElementById("mainVideo");
 
-document.getElementById(
-"popup"
-).style.display="none";
 
-}
+enter.addEventListener("click", async () => {
+
+
+  /* =========================
+     MÚSICA
+  ========================= */
+
+  try {
+
+    await music.play();
+
+  } catch(error) {
+
+    console.log(
+      "Safari bloqueó el audio:",
+      error
+    );
+
+  }
+
+
+  /* =========================
+     VIDEO PRINCIPAL
+  ========================= */
+
+  try {
+
+    await mainVideo.play();
+
+  } catch(error) {
+
+    console.log(
+      "No se pudo iniciar el video:",
+      error
+    );
+
+  }
+
+
+  /* =========================
+     CERRAR INTRO
+  ========================= */
+
+  intro.classList.add("hidden");
+
+
+  /* =========================
+     MOSTRAR CONTENIDO
+  ========================= */
+
+  setTimeout(() => {
+
+    content.classList.add("visible");
+
+  }, 250);
+
+
+  /* =========================
+     ELIMINAR INTRO
+  ========================= */
+
+  setTimeout(() => {
+
+    intro.remove();
+
+  }, 900);
+
+});
 
 </script>
+
 
 </body>
 </html>
